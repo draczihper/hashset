@@ -5,3 +5,10 @@ class Node {
     }
 }
 
+class HashSet {
+    constructor(initialCapacity = 1) {
+        this.buckets = new Array(initialCapacity);
+        this.loadFactor = 0.75;
+        this.size = 0;
+    }
+}
