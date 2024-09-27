@@ -62,4 +62,25 @@ class HashSet {
         return false;
     }
 
+    remove(key) {
+        const index = this.hash(key)
+        let current = this.buckets[index];
+        let prev = null;
+
+        while (current) {
+            if (current.key === key) {
+                if (prev) {
+                    prev.next = current.next;
+                } else {
+                    this.buckets[index] = current.next;
+                }
+                this.size--;
+                return true;
+            }
+            prev = current;
+            current = current.next;
+        }
+        return false;
+    }
+
 }
