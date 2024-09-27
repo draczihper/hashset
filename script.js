@@ -22,4 +22,31 @@ class HashSet {
         return hashCode;
     }
 
+    add(key) {
+        if (this.size >= this.buckets * this.loadFactor) {
+            this.resize() // Resize our hash set as elements increase
+        }
+
+        const index = this.hash(key);
+        if (!this.buckets[index]) {
+            this.buckets[index] = new Node(key);
+            this.size++;
+            return true;
+        } else {
+            let current = this.buckets[index];
+            while (current) {
+                if (current.key === key) {
+                    return false; // key already exists
+                }
+                if (!current.next) {
+                    current.next = new Node(key);
+                    this.size++;
+                    return true;
+                }
+                current = current.next;
+            }
+        }
+
+    }
+
 }
