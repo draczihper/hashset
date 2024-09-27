@@ -49,4 +49,17 @@ class HashSet {
 
     }
 
+    has(key) {
+        const index = this.hash(key);
+        let current = this.buckets[index];
+
+        while (current) {
+         if (current.key === key) {
+                return true;
+            }
+            current = current.next
+        }
+        return false;
+    }
+
 }
