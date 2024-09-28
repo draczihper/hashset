@@ -83,4 +83,26 @@ class HashSet {
         return false;
     }
 
+    resize() {
+        const newCapacity = this.buckets.length * 2;
+        const newBuckets = new Array(newCapacity);
+
+        for (let i = 0; i < this.buckets.length; i++) {
+            let current = this.buckets[i];
+            while (current) {
+                const newIndex = this.hash(current.key) % newCapacity;
+                if (!newBuckets[newIndex]) {
+                    newBuckets[newIndex] = new Node(current.key);
+                } else {
+                    let newCurrent = newBuckets[newIndex];
+                    while (newCurrent.next) {
+                        newCurrent = newCurrent.next;
+                    }
+                    newCurrent.next = new Node(current.key);
+                }
+                current = current.next;
+            }
+        }
+        this.buckets = newBuckets;
+    }
 }
