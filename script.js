@@ -105,4 +105,8 @@ class HashSet {
         }
         this.buckets = newBuckets;
     }
+
+    size() {
+        return this.size;
+    }
 }
