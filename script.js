@@ -109,4 +109,9 @@ class HashSet {
     size() {
         return this.size;
     }
+
+    clear() {
+        this.buckets = new Array(1);
+        this.size = 0;
+    }
 }
