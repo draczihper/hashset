@@ -114,4 +114,16 @@ class HashSet {
         this.buckets = new Array(1);
         this.size = 0;
     }
+
+    keys() {
+        const allKeys = [];
+        for (let i = 0; i < this.buckets.length; i++) {
+            let current = this.buckets[i];
+            while (current) {
+                allKeys.push(current.key);
+                current = current.next;
+            }
+        }
+        return allKeys;
+    }
 }
