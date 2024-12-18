@@ -9,7 +9,7 @@ class HashSet {
     constructor(initialCapacity = 1) {
         this.buckets = new Array(initialCapacity);
         this.loadFactor = 0.75;
-        this.size = 0;
+        this._size = 0;
     }
 
     hash(key) {
@@ -23,14 +23,14 @@ class HashSet {
     }
 
     add(key) {
-        if (this.size >= this.buckets * this.loadFactor) {
+        if (this._size >= this.buckets * this.loadFactor) {
             this.resize() // Resize our hash set as elements increase
         }
 
         const index = this.hash(key);
         if (!this.buckets[index]) {
             this.buckets[index] = new Node(key);
-            this.size++;
+            this._size++;
             return true;
         } else {
             let current = this.buckets[index];
@@ -40,7 +40,7 @@ class HashSet {
                 }
                 if (!current.next) {
                     current.next = new Node(key);
-                    this.size++;
+                    this._size++;
                     return true;
                 }
                 current = current.next;
@@ -74,7 +74,7 @@ class HashSet {
                 } else {
                     this.buckets[index] = current.next;
                 }
-                this.size--;
+                this._size--;
                 return true;
             }
             prev = current;
@@ -107,12 +107,12 @@ class HashSet {
     }
 
     size() {
-        return this.size;
+        return this._size;
     }
 
     clear() {
         this.buckets = new Array(1);
-        this.size = 0;
+        this._size = 0;
     }
 
     keys() {
@@ -126,4 +126,24 @@ class HashSet {
         }
         return allKeys;
     }
+
+    bucketCount() {
+        return this.buckets.length;
+    }
+
+    collisions() {
+        let collisionsCount = 0;
+        for (let i = 0; i < this.buckets.length; i++){
+            if (this.buckets[i] && this.buckets[i].next) {
+                let current = this.buckets[i];
+                while (current.next) {
+                    collisionsCount++
+                    current = current.next;
+                }
+            }
+        }
+        return collisionsCount;
+    }
 }
+
+module.exports = HashSet;
